@@ -1,0 +1,125 @@
+:root {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  color: #111;
+  background: #f6f7fb;
+}
+
+* { box-sizing: border-box; }
+
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 18px 16px 40px;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+h1 { margin: 0 0 6px; font-size: 22px; }
+.sub { margin: 0; color: #444; }
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.card {
+  background: white;
+  border: 1px solid #e6e8f0;
+  border-radius: 12px;
+  padding: 14px;
+  box-shadow: 0 1px 2px rgba(0,0,0,.04);
+}
+
+label {
+  display: block;
+  font-size: 12px;
+  color: #444;
+  margin: 10px 0 6px;
+}
+
+textarea {
+  width: 100%;
+  border: 1px solid #d9deee;
+  border-radius: 10px;
+  padding: 10px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  line-height: 1.35;
+  resize: vertical;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+button {
+  appearance: none;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: #1f6feb;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+button:disabled { opacity: 0.6; cursor: not-allowed; }
+button:nth-child(2) { background: #0f766e; }
+
+.outBlock { margin-top: 10px; }
+.outTitle { font-weight: 700; font-size: 13px; margin-bottom: 6px; }
+
+pre {
+  margin: 0;
+  padding: 12px;
+  background: #0b1020;
+  color: #d9e6ff;
+  border-radius: 12px;
+  overflow: auto;
+  min-height: 120px;
+  font-size: 12px;
+}
+
+.hint { margin: 12px 0 0; font-size: 12px; color: #555; }
+
+.error {
+  background: #ffe8e8;
+  color: #8a1f1f;
+  border: 1px solid #ffcccc;
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  white-space: pre-wrap;
+}
+
+.status { display: flex; align-items: center; gap: 8px; }
+.pill {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #eee;
+  font-size: 12px;
+  font-weight: 700;
+}
+.pill.ok { background: #e7fff4; color: #0b6b42; border: 1px solid #bff0da; }
+
+.footer {
+  margin-top: 12px;
+  color: #666;
+  font-size: 12px;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .grid { grid-template-columns: 1fr; }
+}
