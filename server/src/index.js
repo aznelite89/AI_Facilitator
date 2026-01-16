@@ -1,41 +1,57 @@
-import express from "express";
-import cors from "cors";
-import helmet from "helmet";
-import morgan from "morgan";
-import dotenv from "dotenv";
+import express from "express"
+import cors from "cors"
+import helmet from "helmet"
+import morgan from "morgan"
+import dotenv from "dotenv"
 
-import { apiRouter } from "./routes/api.routes.js";
+import { apiRouter } from "./routes/api.routes.js"
 
-dotenv.config();
+dotenv.config()
 
-const app = express();
+const app = express()
 
-app.use(helmet());
-app.use(cors());
-app.use(express.json({ limit: "1mb" }));
-app.use(morgan("dev"));
+app.use(helmet())
+app.use(cors())
+app.use(express.json({ limit: "1mb" }))
+app.use(morgan("dev"))
 
 app.get("/health", (_req, res) => {
-  res.json({ ok: true, service: "ai-facilitator", ts: new Date().toISOString() });
-});
+  res.json({
+    ok: true,
+    service: "ai-facilitator",
+    ts: new Date().toISOString(),
+  })
+})
 
-app.use("/api", apiRouter);
+app.use("/api", apiRouter)
+
+app.use((err, req, res, next) => {
+  console.error("Unhandled error:", err)
+
+  const status = err.status || 500
+  res.status(status).json({
+    error: {
+      message: err.message || "Internal Server Error",
+      details: err.details || null,
+    },
+  })
+})
 
 // 404
 app.use((req, res) => {
-  res.status(404).json({ error: "Not Found", path: req.path });
-});
+  res.status(404).json({ error: "Not Found", path: req.path })
+})
 
 // Error handler
 // eslint-disable-next-line no-unused-vars
 app.use((err, _req, res, _next) => {
-  console.error(err);
+  console.error(err)
   res.status(err.status || 500).json({
     error: err.message || "Internal Server Error",
-  });
-});
+  })
+})
 
-const port = Number(process.env.PORT || 3000);
+const port = Number(process.env.PORT || 3000)
 app.listen(port, () => {
-  console.log(`[server] listening on http://localhost:${port}`);
-});
+  console.log(`[server] listening on http://localhost:${port}`)
+})
