@@ -7,11 +7,11 @@
     "client"
   ],
   "scripts": {
-    "dev": "npm run dev -w server & npm run dev -w client",
-    "dev:win": "concurrently -n server,client -c auto \"npm run dev -w server\" \"npm run dev -w client\"",
-    "build": "npm run build -w client",
-    "start": "npm run start -w server",
-    "lint": "npm run lint -w server && npm run lint -w client"
+    "dev": "concurrently -k -n server,client \"pnpm -C server dev\" \"pnpm -C client dev\"",
+    "dev:win": "concurrently -k -n server,client \"pnpm -C server dev\" \"pnpm -C client dev\"",
+    "build": "pnpm -C client build",
+    "start": "pnpm -C server start",
+    "lint": "pnpm -C server lint && pnpm -C client lint"
   },
   "devDependencies": {
     "concurrently": "^9.0.1"
