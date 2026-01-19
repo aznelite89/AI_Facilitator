@@ -134,11 +134,6 @@ export default function App() {
               2) Facilitate (Intervention)
             </button>
           </div>
-
-          <p className="hint">
-            Dev mode uses Vite proxy: the browser calls <code>/api/*</code> and
-            it forwards to Express at <code>http://localhost:3000</code>.
-          </p>
         </section>
 
         <section className="card">

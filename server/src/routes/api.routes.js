@@ -56,30 +56,43 @@ INPUT (conversation as raw text, chronological):
 ${conversation}
 
 TASK:
-Decide if the AI should intervene to help the conversation.
-Intervene ONLY when helpful, e.g.:
-- conversation stalls / no topic / awkward silence
-- one user dominates / the other disengages
-- they are stuck, confused, or need structure
-- the talk becomes unproductive or off-track
+Decide whether the AI should intervene to help the conversation.
+
+Intervene ONLY when helpful, for example when:
+- the conversation stalls or both say they have no topic / no idea
+- one user is confused or disengaged
+- the discussion lacks direction or structure
+- the conversation becomes unproductive or off-track
+
+DECIDE WHO NEEDS HELP:
+- If NEITHER user needs help → no intervention.
+- If ONLY ONE user needs help → generate ONE message targeted to that user.
+- If BOTH users need help → generate TWO messages, one for each user.
 
 OUTPUT RULES:
 - should_intervene: boolean
 - urgency: "high" | "low" | "none"
-  - "high": should show message in chat now
-  - "low": optional (nice-to-have)
-  - "none": no message should be shown
-- If should_intervene is false, set urgency = "none" and ai_message = null.
-- If should_intervene is true, include ai_message with:
-  - ai_message: 1–2 sentences max, plus ONE probing question
-  - target: a profile id from users_info (pick who should receive it)
+  - "high": must show message(s) in the chat now
+  - "low": optional / supportive suggestion
+  - "none": no AI message should be shown
+- If should_intervene is false:
+  - urgency MUST be "none"
+  - ai_messages MUST be an empty array []
+- If should_intervene is true:
+  - urgency MUST be "high" or "low"
+  - ai_messages MUST contain 1 or 2 items
+  - Each item MUST have:
+    - ai_message: 1–2 sentences, professional and friendly, with ONE probing question
+    - target: a profile ID taken from users_info (the user this message is directed to)
 
-Return ONLY valid JSON in this exact format:
+Return ONLY valid JSON in this exact format (no extra text, no markdown):
 
 {
   "should_intervene": true|false,
   "urgency": "high"|"low"|"none",
-  "ai_message": { "ai_message": "...", "target": "PROFILE_ID" } | null
+  "ai_messages": [
+    { "ai_message": "...", "target": "PROFILE_ID" }
+  ]
 }
 `.trim()
 }
