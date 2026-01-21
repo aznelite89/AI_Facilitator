@@ -8,12 +8,12 @@ export const apiRouter = Router()
 // Validation Schemas
 // ----------------------
 const initiateSchema = z.object({
-  users_info: z.string().min(1, "users_info is required (string)"),
+  users_info: z.string().min(1, "users_info is required (string)")
 })
 
 const facilitateSchema = z.object({
   users_info: z.string().min(1, "users_info is required (string)"),
-  conversation: z.string().min(1, "conversation is required (string)"),
+  conversation: z.string().min(1, "conversation is required (string)")
 })
 
 // ----------------------
@@ -64,6 +64,12 @@ Intervene ONLY when helpful, for example when:
 - the discussion lacks direction or structure
 - the conversation becomes unproductive or off-track
 
+TARGETING RULE (IMPORTANT):
+- First, determine which user is currently asking for help or is most clearly stuck based on the MOST RECENT messages
+  (e.g. "help", "please help", "i don't know what to say", "no topic", "no idea").
+- If ONLY ONE user shows these "needs help" signals, you MUST target that user (do NOT target the other user).
+- Only generate messages for BOTH users when BOTH users show clear "needs help" signals in the conversation.
+
 DECIDE WHO NEEDS HELP:
 - If NEITHER user needs help → no intervention.
 - If ONLY ONE user needs help → generate ONE message targeted to that user.
@@ -83,7 +89,8 @@ OUTPUT RULES:
   - ai_messages MUST contain 1 or 2 items
   - Each item MUST have:
     - ai_message: 1–2 sentences, professional and friendly, with ONE probing question
-    - target: a profile ID taken from users_info (the user this message is directed to)
+    - target: a profile ID taken from users_info
+    - target MUST be the user who needs help (based on the TARGETING RULE above)
 
 Return ONLY valid JSON in this exact format (no extra text, no markdown):
 
@@ -107,8 +114,8 @@ apiRouter.post("/initiate-conversation", async (req, res, next) => {
       return res.status(400).json({
         error: {
           message: "Invalid request body",
-          details: parsed.error.flatten(),
-        },
+          details: parsed.error.flatten()
+        }
       })
     }
 
@@ -120,8 +127,8 @@ apiRouter.post("/initiate-conversation", async (req, res, next) => {
       return res.status(502).json({
         error: {
           message: "Gemini returned unexpected response shape",
-          details: result,
-        },
+          details: result
+        }
       })
     }
 
@@ -141,8 +148,8 @@ apiRouter.post("/facilitate-conversation", async (req, res, next) => {
       return res.status(400).json({
         error: {
           message: "Invalid request body",
-          details: parsed.error.flatten(),
-        },
+          details: parsed.error.flatten()
+        }
       })
     }
 
@@ -163,8 +170,8 @@ apiRouter.post("/facilitate-conversation", async (req, res, next) => {
       return res.status(502).json({
         error: {
           message: "Gemini returned unexpected response shape",
-          details: result,
-        },
+          details: result
+        }
       })
     }
 
