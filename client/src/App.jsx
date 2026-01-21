@@ -17,10 +17,14 @@ const DEFAULT_USERS_INFO = `Users:
 \nConnection Preferences: Professional Networking, Mentorship Opportunities, Manucfacturing Project Collaboration
 `
 
-const DEFAULT_CONVO = `Ah Meng: Hello Tom!
-Ali: Hi Mark, how are you?
+const DEFAULT_CONVO = `Ah Meng: Hello Ali!
+Ali: Hi Ah Meng, how are you?
 Ah Meng: I'm good! Thanks!
-Ah Meng: I don't have any topic
+Ah Meng: help
+Ah Meng: help!
+Ah Meng: help me..
+Ali: I like shoes
+Ah Meng: please help
 `
 
 export default function App() {
@@ -49,7 +53,7 @@ export default function App() {
       const res = await fetch("/api/initiate-conversation", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ users_info: usersInfo }),
+        body: JSON.stringify({ users_info: usersInfo })
       })
       const json = await res.json()
       if (!res.ok)
@@ -72,7 +76,7 @@ export default function App() {
       const res = await fetch("/api/facilitate-conversation", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ users_info: usersInfo, conversation }),
+        body: JSON.stringify({ users_info: usersInfo, conversation })
       })
       const json = await res.json()
       if (!res.ok)
